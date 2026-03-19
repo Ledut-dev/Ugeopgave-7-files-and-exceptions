@@ -16,12 +16,11 @@ public class Cafe {
     }
 
     public void loadData(){
-        try {
-            File file = new File("Opgave_6/data/menu.csv");
-            Scanner scanner = new Scanner(file);
+        //Try with resources to allow scanner to autoclose
+        try (Scanner scanner = new Scanner(new File("Opgave_6/data/menu.csv"))){
             //skipping and saving header
             header = scanner.nextLine();
-            while(scanner.hasNextLine()){
+            while(scanner.hasNext()){
                 String[] data = scanner.nextLine().split(",");
                 coffeeMenu.add(new Drink2(data[0].trim(), Integer.parseInt(data[1].trim()), Integer.parseInt(data[2].trim())));
             }
@@ -33,6 +32,7 @@ public class Cafe {
     }
 
     public void saveData(){
+        //Try with resources to allow FileWriter to autoclose
         try (FileWriter writer = new FileWriter("Opgave_6/data/menu.csv")){
             //writing back header
             writer.write(header + "\n");
